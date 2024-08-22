@@ -20,7 +20,7 @@ def block_to_block_type(block):
     if block[0:3] == "```" and block[-3:] == "```":
         return block_type_code
     lines = block.split("\n")
-    if all(l[0] == ">" for l in lines):
+    if all(l[0:2] == "> " for l in lines):
         return block_type_quote
     if all(l[0:2] == "* " for l in lines) or all(l[0:2] == "- " for l in lines):
         return block_type_unordered_list
@@ -50,7 +50,8 @@ def create_heading_html_node(block):
     return parent_html
 
 def create_quote_html_node(block):
-    block_proc = "\n".join([line[1:] for line in block.split("\n")])
+    print(block)
+    block_proc = "\n".join([line[2:] for line in block.split("\n")])
     html_nodes = []
     for bl in block_proc:
         html_nodes.extend(text_to_html_children(bl))
@@ -58,7 +59,7 @@ def create_quote_html_node(block):
     return parent_html
 
 def create_code_html_node(block):
-    html_nodes = text_to_html_children(block[3:-3])
+    html_nodes = text_to_html_children(block[3:-3].strip())
     code_html = ParentNode(tag=f"code", children=html_nodes)
     parent_html = ParentNode(tag = "pre", children = [code_html])
     return parent_html
@@ -98,5 +99,6 @@ def mardown_to_html_node(markdown):
         html_nodes.append(block_type_func_maping[block_type](block))
     ###
     root_node = ParentNode(tag="div", children=html_nodes)
+    print(root_node.to_html())
     return root_node
 
