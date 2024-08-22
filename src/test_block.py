@@ -1,7 +1,7 @@
 import unittest
 from md_block import (
         markdown_to_blocks,
-        mardown_to_html_node,
+        markdown_to_html_node,
         block_to_block_type,
         block_type_paragraph,
         block_type_heading,
@@ -58,7 +58,7 @@ class TestExtractBlock(unittest.TestCase):
             f"* This is another list item\n\n"\
             f"1. ordered list\n2. ordered list again\n\n"\
             f"```Some code here```"
-        html_node = mardown_to_html_node(text)
+        html_node = markdown_to_html_node(text)
         print(html_node.to_html())
         expected_res = f"<div><h1>This is a heading</h1><p>This is a paragraph of text. It has some <b>bold</b> and <i>italic</i> words inside of it.</p>"\
                 f"<ul><li>This is the first list item in a list block</li><li>This is a list item</li><li>This is another list item</li></ul>"\

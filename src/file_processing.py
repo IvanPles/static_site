@@ -15,6 +15,11 @@ def get_all_files_recursive(path_to_get):
             queue.extend(new_items)
     return all_folders, all_content
 
+def change_top_folder(folders, content, new_folder):
+    new_folders = [os.path.join(new_folder, *f.split(os.path.sep)[1:]) for f in folders]
+    new_content = [os.path.join(new_folder, *f.split(os.path.sep)[1:]) for f in content]
+    return new_folders, new_content
+
 def remove_all_files(path):
     if not os.path.exists(path):
         print("No such path")
@@ -26,8 +31,7 @@ def remove_all_files(path):
 
 def move_recursive(path_src, path_dest):
     all_folders, all_content = get_all_files_recursive(path_src)
-    new_folders = [os.path.join(path_dest, *f.split(os.path.sep)[1:]) for f in all_folders]
-    new_content = [os.path.join(path_dest, *f.split(os.path.sep)[1:]) for f in all_content]
+    new_folders, new_content = change_top_folder(all_folders, all_content, path_dest)
     for folder in new_folders:
         os.mkdir(folder)
     for file_old, file_new in zip(all_content, new_content):

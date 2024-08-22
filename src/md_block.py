@@ -90,7 +90,7 @@ block_type_func_maping = {
     block_type_unordered_list: create_unordered_list_html_node,
 }
 
-def mardown_to_html_node(markdown):
+def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
     html_nodes = [] 
     print(blocks)
