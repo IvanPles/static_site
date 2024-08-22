@@ -18,10 +18,11 @@ def get_all_files_recursive(path_to_get):
 def remove_all_files(path):
     if not os.path.exists(path):
         print("No such path")
+        os.mkdir(path)
         return None
-    for f in os.listdir(path):
-        shutil.rmtree(os.path.join(path, f))
-    return 1
+    shutil.rmtree(path)
+    os.mkdir(path)
+    return None
 
 def move_recursive(path_src, path_dest):
     all_folders, all_content = get_all_files_recursive(path_src)
